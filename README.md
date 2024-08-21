@@ -1,16 +1,33 @@
-# i2c-buffers
+# MPL31155A2
 
-This adds some buffer functions. In the first instance just a register read into buffer.
+Simple example library for reading from a pressure/temperature sensor.
 
-`static func readIntoBuffer<T:BinaryInteger>(buffer: UnsafeMutableBufferPointer<T>,
-    fromAddress address: UInt8,
-    startRegister: UInt8,
-    timeout: UInt16) -> Bool`
+Example...
 
-The number of registers to read and the register type are inferred by the generic type parameter.
+```
+func readTemperature() -> Float {
+    print("Starting pressure and temperature monitor...")
+    
+    ATmega328P.Twi.setup() // speed: 0x47, premultiplier: 0
+    
+    // enable the MPL31155A2 sensor for reading oversampled 128x
+    guard ATmega328P.Twi.blockingCheckSensor() else {
+        print("sensor check failed")
+        return -1
+    }
+    
+    guard ATmega328P.Twi.blockingSetupSensorFlags() else {
+        print("sensor setup failed")
+        return -1
+    }
 
-You specify the slave address of the device to read, and the startin register to read from.
+    print("\n setup sensor seems fine, checking temperature")
 
-Timeout is as in the standard i2c library.
+    let l = ATmega328P.Twi.blockingGetTemperature()
 
-Returns: true if all expected data was read.
+    print("got temperature from sensor")
+    return l
+}
+
+readTemperature()
+```
