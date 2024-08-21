@@ -1,0 +1,4 @@
+files:
+- MPL31155A2.swift
+- Package.swift
+- module.modulemap
