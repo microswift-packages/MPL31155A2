@@ -10,8 +10,8 @@ let package = Package(
             targets: ["MPL31155A2"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/microswift-packages/i2c", from: "1.0.0")
-        .package(url: "https://github.com/microswift-packages/i2c-buffers", from: "1.0.0")
+        .package(url: "https://github.com/microswift-packages/i2c", from: "1.0.0"),
+        .package(url: "https://github.com/microswift-packages/i2c-buffers", from: "1.0.0"),
         .package(url: "https://github.com/microswift-packages/delay", from: "1.0.0")
     ],
     targets: [

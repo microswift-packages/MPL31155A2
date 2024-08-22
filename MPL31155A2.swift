@@ -40,13 +40,13 @@ private func readTemperatureBuffer(_ buffer: UnsafeMutableBufferPointer<UInt8>) 
 
 public extension Twi where Twsr.RegisterType == UInt8 {
     static func blockingWriteControlReg1(value: UInt8) -> Bool {
-        let slaveAddress: UInt8 = 0x60
+      let slaveAddress: UInt8 = 0x60
     
       return writeDeviceRegister(address: slaveAddress, register: 0x26, value: value, timeout: 50_000)
     }
     
     static func blockingWaitForStatusFlag(flag: UInt8) -> Bool {
-        let slaveAddress: UInt8 = 0x60
+      let slaveAddress: UInt8 = 0x60
 
       guard var status = readDeviceRegister(address: slaveAddress, register: 0, timeout: 50_000) else { return false }
       while status & flag == 0 {
@@ -61,8 +61,8 @@ public extension Twi where Twsr.RegisterType == UInt8 {
     // MPL31155A2 high level functions
     /// Get the current altitude from a running sensor.
     static func blockingGetAltitude() -> Float {
-        let slaveAddress: UInt8 = 0x60
-        let pressureDataReadyFlag: UInt8 = 0x04
+      let slaveAddress: UInt8 = 0x60
+      let pressureDataReadyFlag: UInt8 = 0x04
     
       // start the altimeter, turn on the analog systems, ADC, and set oversampling rate to 128x, read as altitude
       guard blockingWriteControlReg1(value: 0xB9) else { return 0.0 }
@@ -82,8 +82,8 @@ public extension Twi where Twsr.RegisterType == UInt8 {
 
     /// Get the current pressure from a running sensor.
     static func blockingGetPressure() -> Float {
-        let slaveAddress: UInt8 = 0x60
-        let pressureDataReadyFlag: UInt8 = 0x04
+      let slaveAddress: UInt8 = 0x60
+      let pressureDataReadyFlag: UInt8 = 0x04
     
       // start the altimeter, turn on the analog systems, ADC, and set oversampling rate to 128x, read as pressure
       guard blockingWriteControlReg1(value: 0x39) else { return 0.0 }
@@ -103,8 +103,8 @@ public extension Twi where Twsr.RegisterType == UInt8 {
 
     /// Get the current temperature from a running sensor.
     static func blockingGetTemperature() -> Float {
-        let slaveAddress: UInt8 = 0x60
-        let temperatureDataReadyFlag: UInt8 = 0x02
+      let slaveAddress: UInt8 = 0x60
+      let temperatureDataReadyFlag: UInt8 = 0x02
     
       // start the altimeter, turn on the analog systems, ADC, and set oversampling rate to 128x
     
@@ -125,7 +125,7 @@ public extension Twi where Twsr.RegisterType == UInt8 {
 
     /// Once I2C has been set up, check that the sensor is available and connected.
     static func blockingCheckSensor() -> Bool where Twsr.RegisterType == UInt8 {
-        let slaveAddress: UInt8 = 0x60
+      let slaveAddress: UInt8 = 0x60
     
       guard let whoami = readDeviceRegister(address: slaveAddress, register: 0x0C, timeout: 50_000) else {
           let status: UInt8 = twsr.registerValue
@@ -137,7 +137,7 @@ public extension Twi where Twsr.RegisterType == UInt8 {
 
     /// When I2C is running and we are sure the sensor is present, setup standard flags.
     static func blockingSetupSensorFlags() -> Bool {
-        let slaveAddress: UInt8 = 0x60
+      let slaveAddress: UInt8 = 0x60
     
       return writeDeviceRegister(address: slaveAddress, register: 0x13, value: 0x07, timeout: 50_000) // set all flags enabled for data retrieval
     }
