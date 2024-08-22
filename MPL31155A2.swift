@@ -128,8 +128,6 @@ public extension Twi where Twsr.RegisterType == UInt8 {
       let slaveAddress: UInt8 = 0x60
     
       guard let whoami = readDeviceRegister(address: slaveAddress, register: 0x0C, timeout: 50_000) else {
-          let status: UInt8 = twsr.registerValue
-          print(status)
           return false
       }
       return whoami == 0xC4
